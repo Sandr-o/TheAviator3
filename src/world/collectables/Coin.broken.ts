@@ -1,9 +1,14 @@
+import THREE, { Mesh } from 'three';
 import {COLOR_COINS} from '../../settings';
 import {utils} from '../../utils/utils.broken';
-
+import {Game} from '../../game'
 //region Coins
 class Coin {
-  constructor() {
+  mesh: Mesh;
+  angle: number;
+  dist: number;
+
+  constructor(private game: Game) {
     var geom = new THREE.CylinderGeometry(4, 4, 1, 10);
     var mat = new THREE.MeshPhongMaterial({
       color: COLOR_COINS,
@@ -15,7 +20,7 @@ class Coin {
     this.mesh.castShadow = true;
     this.angle = 0;
     this.dist = 0;
-    sceneManager.add(this);
+    this.game.sceneManager.add(this);
   }
 
   tick(deltaTime) {

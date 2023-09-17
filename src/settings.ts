@@ -69,7 +69,7 @@ export const WORLD_DEFAULT_SETTINGS = {
 
   enemyDistanceTolerance: 10,
   enemiesSpeed: 0.6,
-  distanceForEnemiesSpawn: 50,
+  distanceForEnemiesSpawn: 32,
 };
 
 export const DEFAULT_STATE = {

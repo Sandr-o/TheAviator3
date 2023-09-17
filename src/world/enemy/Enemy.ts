@@ -83,7 +83,7 @@ export function spawnEnemies(count: number, game: Game) {
     enemy.distance =
       game.world.worldSettings.seaRadius +
       game.world.worldSettings.planeDefaultHeight +
-      (-1 + Math.random() * 2) * (game.world.worldSettings.planeAmpHeight - 20);
+      (-1 + Math.random() * 2) * (game.world.worldSettings.planeAmpHeight);
     enemy.mesh.position.x = Math.cos(enemy.angle) * enemy.distance;
     enemy.mesh.position.y =
       -game.world.worldSettings.seaRadius + Math.sin(enemy.angle) * enemy.distance;
