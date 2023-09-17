@@ -131,6 +131,7 @@ export class UIManager {
       this.updateCoinsCount();
 
       this.hideReplay();
+      this.disableScoreScreen();
     }
   }
 
@@ -209,6 +210,9 @@ export class UIManager {
       this.game.state.statistics.enemiesSpawned;
     document.getElementById('score-shots-fired').innerText = this.game.state.statistics.shotsFired;
     document.getElementById('score-lifes-lost').innerText = this.game.state.statistics.lifesLost;
+  }
+  disableScoreScreen() {
+    document.getElementById('score-screen').classList.remove('visible');
   }
 
   showError(message) {

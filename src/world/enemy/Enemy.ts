@@ -17,7 +17,7 @@ class Enemy {
   constructor(private game: Game) {
     var geom = new TetrahedronGeometry(8, 2);
     var mat = new MeshPhongMaterial({
-      color: Colors.red,
+      color: Colors.brown,
       shininess: 0,
       specular: 0xffffff,
       flatShading: true,

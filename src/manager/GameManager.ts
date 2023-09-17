@@ -137,6 +137,7 @@ export class GameManager {
       airplane.mesh.position.y -= this.game.state.planeFallSpeed * deltaTime;
       if (airplane.mesh.position.y < -200) {
         this.game.uiManager.showReplay();
+        this.game.uiManager.showScoreScreen();
         this.game.state.status = GameStatus.WaitingReplay;
         this.game.audioManager.play('water-splash');
       }

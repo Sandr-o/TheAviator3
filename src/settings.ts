@@ -39,7 +39,7 @@ export const WORLD_DEFAULT_SETTINGS = {
   maxLifes: 3,
   pauseLifeSpawn: 400,
 
-  levelCount: 6,
+  levelCount: 9999,
   distanceForLevelUpdate: 500,
 
   planeDefaultHeight: 100,
