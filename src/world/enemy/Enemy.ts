@@ -5,7 +5,6 @@ import {rotateAroundSea, spawnParticles} from '../../utils/utils';
 import {GameStatus} from '../../types';
 import THREE, {Mesh, TetrahedronGeometry, MeshPhongMaterial, Box3} from 'three';
 import {removeLife} from '../../mechanic/Lives';
-
 //region Enemies
 class Enemy {
   mesh: Mesh;
@@ -34,7 +33,6 @@ class Enemy {
     rotateAroundSea(this, deltaTime, this.game.world.worldSettings.enemiesSpeed);
     this.mesh.rotation.y += Math.random() * 0.1;
     this.mesh.rotation.z += Math.random() * 0.1;
-
     // collision?
     if (
       utils.collide(
@@ -47,6 +45,8 @@ class Enemy {
       this.explode();
       this.game.world.airplane.gethit(this.mesh.position);
       this.game.gameManager.removeLife();
+      this.game.gameManager.setInitSpeed();
+
     }
     // passed-by?
     else if (this.angle > Math.PI) {

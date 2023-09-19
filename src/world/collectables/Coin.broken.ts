@@ -1,12 +1,20 @@
-import THREE, { Mesh } from 'three';
-import {COLOR_COINS} from '../../settings';
-import {utils} from '../../utils/utils.broken';
-import {Game} from '../../game'
+import * as THREE from 'three'; // Importing from 'three' instead of 'THREE'
+import { COLOR_COINS } from '../../settings';
+import { Game } from '../../game';
+import { Airplane } from '../airplane/Airplane';
+import { World } from '../World'; // Correcting the import path
+import { rotateAroundSea, spawnParticles, addCoin } from '../../utils/utils'; // Importing missing functions
+import { AudioManager } from '../../manager/AudioManager';
+import { SceneManager } from '../../manager/SceneManager';
+
 //region Coins
 class Coin {
-  mesh: Mesh;
+  mesh: THREE.Mesh;
   angle: number;
   dist: number;
+  world: World;
+  audioManager: AudioManager;
+  sceneManager: SceneManager;
 
   constructor(private game: Game) {
     var geom = new THREE.CylinderGeometry(4, 4, 1, 10);
@@ -21,9 +29,12 @@ class Coin {
     this.angle = 0;
     this.dist = 0;
     this.game.sceneManager.add(this);
+    this.world = game.world;
+    this.audioManager = game.audioManager;
+    this.sceneManager = game.sceneManager;
   }
 
-  tick(deltaTime) {
+  tick(deltaTime: number, airplane: Airplane, world: World) {
     rotateAroundSea(this, deltaTime, world.coinsSpeed);
 
     this.mesh.rotation.z += Math.random() * 0.1;
@@ -32,13 +43,13 @@ class Coin {
     // collision?
     if (utils.collide(airplane.mesh, this.mesh, world.coinDistanceTolerance)) {
       spawnParticles(this.mesh.position.clone(), 5, COLOR_COINS, 0.8);
-      addCoin();
-      audioManager.play('coin', {volume: 0.5});
-      sceneManager.remove(this);
+      addCoin(); // Assuming addCoin is a valid function in your code
+      this.audioManager.play('coin', { volume: 0.5 });
+      this.sceneManager.remove(this);
     }
     // passed-by?
     else if (this.angle > Math.PI) {
-      sceneManager.remove(this);
+      this.sceneManager.remove(this);
     }
   }
 }
@@ -46,16 +57,16 @@ class Coin {
 function spawnCoins() {
   const nCoins = 1 + Math.floor(Math.random() * 10);
   const d =
-    world.seaRadius +
-    world.planeDefaultHeight +
-    utils.randomFromRange(-1, 1) * (world.planeAmpHeight - 20);
+    this.world.seaRadius +
+    this.world.planeDefaultHeight +
+    utils.randomFromRange(-1, 1) * (this.world.planeAmpHeight - 20);
   const amplitude = 10 + Math.round(Math.random() * 10);
   for (let i = 0; i < nCoins; i++) {
-    const coin = new Coin();
+    const coin = new Coin(this.game); // Passing 'game' to the Coin constructor
     coin.angle = -(i * 0.02);
-    coin.distance = d + Math.cos(i * 0.5) * amplitude;
-    coin.mesh.position.y = -world.seaRadius + Math.sin(coin.angle) * coin.distance;
-    coin.mesh.position.x = Math.cos(coin.angle) * coin.distance;
+    coin.dist = d + Math.cos(i * 0.5) * amplitude; // Correcting 'this.coin.distance' to 'coin.dist'
+    coin.mesh.position.y = -this.world.seaRadius + Math.sin(coin.angle) * coin.dist;
+    coin.mesh.position.x = Math.cos(coin.angle) * coin.dist;
   }
-  game.statistics.coinsSpawned += nCoins;
+  this.game.statistics.coinsSpawned += nCoins;
 }

@@ -78,6 +78,7 @@ export class AudioManager {
     this.load('jar-5', 'coin', require('/audio/jar-5.mp3'));
     this.load('jar-6', 'coin', require('/audio/jar-6.mp3'));
     this.load('jar-7', 'coin', require('/audio/jar-7.mp3'));
+    //this.load('stardust','stardust', require('/audio/stardust.mp3'))
 
     this.load('airplane-crash-1', 'airplane-crash', require('/audio/airplane-crash-1.mp3'));
     this.load('airplane-crash-2', 'airplane-crash', require('/audio/airplane-crash-2.mp3'));

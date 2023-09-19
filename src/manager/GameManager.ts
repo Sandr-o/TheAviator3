@@ -11,7 +11,7 @@ export class GameManager {
   public startMap() {
     if (!this.soundPlaying) {
       this.game.audioManager.play('propeller', {loop: true, volume: 1});
-      this.game.audioManager.play('ocean', {loop: true, volume: 1});
+      //this.game.audioManager.play('stardust', {loop: true, volume: 1});
       this.soundPlaying = true;
     }
 
@@ -116,11 +116,11 @@ export class GameManager {
         //   airplane.shoot();
         // }
 
+        const speedBoostIncrement = this.game.state.speedBoost ? this.game.world.worldSettings.speedBoostIncrement : 0;
+
         this.game.world.airplane.tick(deltaTime);
-        this.game.state.distance +=
-          this.game.state.speed * deltaTime * this.game.world.worldSettings.ratioSpeedDistance;
-        this.game.state.speed +=
-          (this.game.state.targetSpeed - this.game.state.speed) * deltaTime * 0.02;
+        this.game.state.distance += this.game.state.speed * deltaTime * this.game.world.worldSettings.ratioSpeedDistance;
+        this.game.state.speed += (this.game.state.targetSpeed - this.game.state.speed + speedBoostIncrement) * deltaTime * 0.02;
         this.game.uiManager.updateDistanceDisplay();
 
         if (this.game.state.lifes <= 0 && canDie) {
@@ -190,7 +190,6 @@ export class GameManager {
   public addCoin() {
     this.game.state.coins += 1;
     this.game.uiManager.updateCoinsCount();
-
     this.game.state.statistics.coinsCollected += 1;
   }
 
@@ -203,9 +202,16 @@ export class GameManager {
   }
 
   public removeLife() {
+    const newTime = new Date().getTime();
+    const deltaTime = newTime - this.oldTime;
+    this.oldTime = newTime;
     this.game.state.lifes = Math.max(0, this.game.state.lifes - 1);
     this.game.uiManager.updateLifesDisplay();
-
     this.game.state.statistics.lifesLost += 1;
+    this.game.state.speed = (this.game.state.targetSpeed - this.game.state.speed) * deltaTime * 0.02
+  }
+  public setInitSpeed() {
+    this.game.state.targetSpeed = this.game.world.worldSettings.initSpeed;
+
   }
 }

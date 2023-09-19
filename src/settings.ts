@@ -15,23 +15,23 @@ export const Colors = {
 export const COLOR_COINS = 0xffd700; // 0x009999
 export const COLOR_COLLECTIBLE_BUBBLE = COLOR_COINS;
 export const COLOR_SEA_LEVEL = [
-  0x68c3c0, // hsl(178deg 43% 59%)
-  0x47b3af, // hsl(178deg 43% 49%)
-  0x398e8b, // hsl(178deg 43% 39%)
-  0x2a6a68, // hsl(178deg 43% 29%)
-  0x1c4544, // hsl(178deg 43% 19%)
-  0x0d2120, // hsl(178deg 43% 09%)
+  0xe6e6e6, // Light gray
+  0xcccccc, // Medium gray
+  0x999999, // Dark gray
+  0x666666, // Even darker gray
+  0x333333, // Very dark gray
+  0x000000, // Black
 ];
 
 export const canDie = true;
 
 export const WORLD_DEFAULT_SETTINGS = {
   initSpeed: 0.00035,
-  incrementSpeedByTime: 0.0000025,
-  incrementSpeedByLevel: 0.000005,
+  incrementSpeedByTime: 0.0000000,
+  incrementSpeedByLevel: 0.000070,
   distanceForSpeedUpdate: 100,
   ratioSpeedDistance: 50,
-
+  speedBoostIncrement: 0.0008,
   simpleGunLevelDrop: 1.1,
   doubleGunLevelDrop: 2.3,
   betterGunLevelDrop: 3.5,
@@ -40,7 +40,7 @@ export const WORLD_DEFAULT_SETTINGS = {
   pauseLifeSpawn: 400,
 
   levelCount: 9999,
-  distanceForLevelUpdate: 500,
+  distanceForLevelUpdate: 250,
 
   planeDefaultHeight: 100,
   planeAmpHeight: 80,
@@ -53,8 +53,8 @@ export const WORLD_DEFAULT_SETTINGS = {
 
   seaRadius: 600,
   seaLength: 800,
-  wavesMinAmp: 5,
-  wavesMaxAmp: 20,
+  wavesMinAmp: 7,
+  wavesMaxAmp: 50,
   wavesMinSpeed: 0.001,
   wavesMaxSpeed: 0.003,
 
@@ -79,9 +79,8 @@ export const DEFAULT_STATE = {
   speed: 0,
   targetSpeed: 0.00035,
   speedLastUpdate: 0,
-
   distance: 0,
-
+  speedBoost: false,
   coins: 0,
   fpv: false,
 

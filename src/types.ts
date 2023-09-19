@@ -13,7 +13,7 @@ export type WorldSettings = {
   incrementSpeedByLevel: number;
   distanceForSpeedUpdate: number;
   ratioSpeedDistance: number;
-
+  speedBoostIncrement: number,
   simpleGunLevelDrop: number;
   doubleGunLevelDrop: number;
   betterGunLevelDrop: number;
@@ -62,7 +62,7 @@ export type State = {
   speedLastUpdate: number;
 
   distance: number;
-
+  speedBoost: boolean;
   coins: number;
   fpv: boolean;
 

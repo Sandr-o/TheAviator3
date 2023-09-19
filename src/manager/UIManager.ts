@@ -99,7 +99,8 @@ export class UIManager {
       this.game.state.paused = !this.game.state.paused;
     }
     if (event.code === 'Space') {
-      // airplane.shoot();
+      // increase speed
+      this.game.state.speedBoost = !this.game.state.speedBoost;
     }
     if (event.code === 'Enter') {
       if (this.game.state.fpv) {

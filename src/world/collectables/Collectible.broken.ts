@@ -1,8 +1,9 @@
-import THREE from 'three';
-import {COLOR_COLLECTIBLE_BUBBLE} from '../../settings';
-import {rotateAroundSea, spawnParticles} from '../../utils/utils';
-import {utils} from '../../utils/utils.broken';
-import {SimpleGun, BetterGun, DoubleGun} from '../airplane/Guns';
+import * as THREE from 'three'; // Importing from 'three' instead of 'THREE'
+import { COLOR_COLLECTIBLE_BUBBLE } from '../../settings';
+import { rotateAroundSea, spawnParticles } from '../../utils/utils';
+import { utils } from '../../utils/utils'; // Correcting the import path
+import { SimpleGun, BetterGun, DoubleGun } from '../airplane/Guns';
+import { Airplane } from '../airplane/Airplane';
 
 //region Collectibles
 class Collectible {
@@ -25,13 +26,6 @@ class Collectible {
     this.mesh.add(mesh);
     this.mesh.castShadow = true;
 
-    // for the angle:
-    //   Math.PI*2 * 0.0  => on the right side of the sea cylinder
-    //   Math.PI*2 * 0.1  => on the top right
-    //   Math.PI*2 * 0.2  => directly in front of the plane
-    //   Math.PI*2 * 0.3  => directly behind the plane
-    //   Math.PI*2 * 0.4  => on the top left
-    //   Math.PI*2 * 0.5  => on the left side
     this.angle = Math.PI * 2 * 0.1;
     this.distance =
       world.seaRadius +
@@ -43,20 +37,16 @@ class Collectible {
     sceneManager.add(this);
   }
 
-  tick(deltaTime) {
+  tick(deltaTime, world, airplane) {
     rotateAroundSea(this, deltaTime, world.collectiblesSpeed);
 
-    // rotate collectible for visual effect
     this.mesh.rotation.y += deltaTime * 0.002 * Math.random();
     this.mesh.rotation.z += deltaTime * 0.002 * Math.random();
 
-    // collision?
     if (utils.collide(airplane.mesh, this.mesh, world.collectibleDistanceTolerance)) {
       this.onApply();
       this.explode();
-    }
-    // passed-by?
-    else if (this.angle > Math.PI) {
+    } else if (this.angle > Math.PI) {
       sceneManager.remove(this);
     }
   }
@@ -101,23 +91,23 @@ class Collectible {
   }
 }
 
-function spawnSimpleGunCollectible() {
-  const gun = SimpleGun.createMesh();
+function spawnCollectible(gunMesh, onApply) {
+  const gun = gunMesh.clone();
   gun.scale.set(0.25, 0.25, 0.25);
   gun.position.x = -2;
 
-  new Collectible(gun, () => {
-    airplane.equipWeapon(new SimpleGun());
+  new Collectible(gun, onApply);
+}
+
+function spawnSimpleGunCollectible() {
+  spawnCollectible(SimpleGun.createMesh(), () => {
+    this.airplane.equipWeapon(new SimpleGun());
   });
 }
 
 function spawnBetterGunCollectible() {
-  const gun = BetterGun.createMesh();
-  gun.scale.set(0.25, 0.25, 0.25);
-  gun.position.x = -7;
-
-  new Collectible(gun, () => {
-    airplane.equipWeapon(new BetterGun());
+  spawnCollectible(BetterGun.createMesh(), () => {
+    this.airplane.equipWeapon(new BetterGun());
   });
 }
 
@@ -136,8 +126,8 @@ function spawnDoubleGunCollectible() {
   gun2.position.y = 2;
   guns.add(gun2);
 
-  new Collectible(guns, () => {
-    airplane.equipWeapon(new DoubleGun());
+  spawnCollectible(guns, () => {
+    this.airplane.equipWeapon(new DoubleGun());
   });
 }
 
@@ -151,7 +141,7 @@ function spawnLifeCollectible() {
   heart.position.set(0, -1, -3);
   heart.scale.set(5, 5, 5);
 
-  new Collectible(heart, () => {
+  spawnCollectible(heart, () => {
     addLife();
   });
 }

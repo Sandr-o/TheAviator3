@@ -6,6 +6,7 @@ import {makeTetrahedron} from '../../utils/utils';
 import {Game} from '../../game';
 import {GameStatus} from '../../types';
 import {utils} from '../../utils/utils.broken';
+import { spawnParticles } from '../../utils/utils';
 
 //region Airplane
 export class Cabin {
@@ -84,6 +85,7 @@ class Tail {
     var geomTailPlane = new THREE.BoxGeometry(15, 20, 5, 1, 1, 1);
     var matTailPlane = new THREE.MeshPhongMaterial({color: Colors.red, flatShading: true});
     var tail = new THREE.Mesh(geomTailPlane, matTailPlane);
+    var pos = tail.position
 
     tail.position.set(-40, 20, 0);
     tail.castShadow = true;
