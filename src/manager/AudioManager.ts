@@ -67,7 +67,7 @@ export class AudioManager {
     // load audio
     this.load('ocean', null, require('/audio/ocean.mp3'));
     this.load('propeller', null, require('/audio/propeller.mp3'));
-
+    this.load('stardust',null, require('/audio/stardust.mp3'))
     this.load('coin-1', 'coin', require('/audio/coin-1.mp3'));
     this.load('coin-2', 'coin', require('/audio/coin-2.mp3'));
     this.load('coin-3', 'coin', require('/audio/coin-3.mp3'));
@@ -78,7 +78,7 @@ export class AudioManager {
     this.load('jar-5', 'coin', require('/audio/jar-5.mp3'));
     this.load('jar-6', 'coin', require('/audio/jar-6.mp3'));
     this.load('jar-7', 'coin', require('/audio/jar-7.mp3'));
-    //this.load('stardust','stardust', require('/audio/stardust.mp3'))
+
 
     this.load('airplane-crash-1', 'airplane-crash', require('/audio/airplane-crash-1.mp3'));
     this.load('airplane-crash-2', 'airplane-crash', require('/audio/airplane-crash-2.mp3'));

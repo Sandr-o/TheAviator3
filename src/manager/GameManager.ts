@@ -10,8 +10,8 @@ export class GameManager {
 
   public startMap() {
     if (!this.soundPlaying) {
-      this.game.audioManager.play('propeller', {loop: true, volume: 1});
-      //this.game.audioManager.play('stardust', {loop: true, volume: 1});
+      //this.game.audioManager.play('propeller', {loop: true, volume: 1});
+      this.game.audioManager.play('stardust');
       this.soundPlaying = true;
     }
 
